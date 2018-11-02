@@ -5,14 +5,18 @@ import requests, re, gi, json, os, sys, datetime
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk, Gio
 
-LOG_FILENAME = 'laserlog.log'
-CACHE_FILENAME = 'laserlog.cache'
+LOG_FILENAME = '~/laserlog/laserlog.log'
+CACHE_FILENAME = '~/laserlog/laserlog.cache'
 CACHE_SECONDS = 600
 
 TEXT_INTRO = 'Hoi! Wie ben jij? Wij houden graag bij wie wanneer de lasercutter gebruikt.'
 TEXT_NOT_ON_LIST = '''Als je nog geen persoonlijke instructie gehad hebt, is het niet de bedoeling dat je de lasercutter gebruikt.
 Vraag iemand die wel op de lijst staat of hij/zij jou instructie wilt geven.'''
 
+def check_path(path):
+    t = os.path.realpath(os.path.expanduser(path))
+    print('"%s" is at "%s"' % (path, t))
+    return t
 
 def get_names_from_wiki():
     download = False
@@ -169,6 +173,8 @@ class LaserLogWindow(Gtk.Window):
             if "lightburn" in prog:
                 self.start_lightburn.set_sensitive(True)
 
+LOG_FILENAME = check_path(LOG_FILENAME)
+CACHE_FILENAME = check_path(CACHE_FILENAME)
 win = LaserLogWindow()
 win.connect("destroy", Gtk.main_quit)
 win.show_all()
