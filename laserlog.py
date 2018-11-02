@@ -147,7 +147,7 @@ class LaserLogWindow(Gtk.Window):
         fp = open(LOG_FILENAME, 'a')
         fp.write('%s,%s,%s\n' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), self.name, 'LightBurn'))
         fp.close()
-        Gio.DesktopAppInfo.new_from_filename(os.path.expanduser('~/Desktop/LightBurn.desktop')).launch()
+        os.execvp(os.path.expanduser('~/LightBurn/start-lightburn'), ['start-lightburn'])
 
     def on_select(self, widget):
         sel = widget.get_selected()
