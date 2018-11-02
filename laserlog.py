@@ -1,6 +1,6 @@
 #!/bin/env python3
 
-import requests, re, gi, json, os, sys, datetime, subprocess
+import requests, re, gi, json, os, sys, datetime
 
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
