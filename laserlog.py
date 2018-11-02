@@ -87,13 +87,16 @@ class LaserLogWindow(Gtk.Window):
             self.treeview.append_column(column)
 
         # creating buttons
-        self.not_in_list = Gtk.Button.new_with_mnemonic("Ik sta niet in de _lijst")
+        self.not_in_list = Gtk.Button.new_with_mnemonic("Ik sta niet in de l_ijst")
         self.not_in_list.connect("clicked", self.on_not_in_list)
 
         self.open_wiki = Gtk.Button.new_with_mnemonic("Meer _informatie op de wiki")
         self.open_wiki.connect("clicked", self.on_wiki)
 
-        self.not_lasercutting = Gtk.Button.new_with_mnemonic("Ik ga _niet lasercutten")
+        self.view_log = Gtk.Button.new_with_mnemonic("Bekijk l_og")
+        self.view_log.connect("clicked", self.on_view_log)
+
+        self.not_lasercutting = Gtk.Button.new_with_mnemonic("Ik ga niet l_asercutten")
         self.not_lasercutting.connect("clicked", self.on_not_lasercutting)
 
         self.start_laserweb = Gtk.Button.new_with_mnemonic("Start Laser_Web")
@@ -116,6 +119,7 @@ class LaserLogWindow(Gtk.Window):
         self.grid.attach(self.start_laserweb, 1, 3, 1, 1)
         self.grid.attach(self.start_lightburn, 1, 4, 1, 1)
         self.grid.attach(self.open_wiki, 2, 3, 1, 1)
+        self.grid.attach(self.view_log, 2, 4, 1, 1)
         self.scrollable_treelist.add(self.treeview)
 
 
@@ -132,6 +136,10 @@ class LaserLogWindow(Gtk.Window):
     def on_wiki(self, widget):
         print("Opening wiki")
         os.spawnvp(os.P_NOWAIT, 'xdg-open', ['xdg-open', 'https://revspace.nl/Lasercutter'])
+
+    def on_view_log(self, widget):
+        print("opening log")
+        os.spawnvp(os.P_NOWAIT, 'xdg-open', ['xdg-open', LOG_FILENAME])
 
     def on_start_laserweb(self, widget):
         print("Starting LaserWeb")
