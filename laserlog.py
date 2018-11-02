@@ -3,7 +3,7 @@
 import requests, re, gi, json, os, sys, datetime
 
 gi.require_version('Gtk', '3.0')
-from gi.repository import Gtk
+from gi.repository import Gtk, Gio
 
 LOG_FILENAME = 'laserlog.log'
 CACHE_FILENAME = 'laserlog.cache'
@@ -139,7 +139,7 @@ class LaserLogWindow(Gtk.Window):
         fp = open(LOG_FILENAME, 'a')
         fp.write('%s,%s,%s\n' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), self.name, 'LaserWeb'))
         fp.close()
-        os.execvp('zenity', ['zenity', '--info', '--text=dummy laserweb'])
+        Gio.DesktopAppInfo.new_from_filename(os.path.expanduser('~/Desktop/LaserWeb.desktop')).launch()
 
     def on_start_lightburn(self, widget):
         print("Starting LightBurn")
@@ -147,7 +147,7 @@ class LaserLogWindow(Gtk.Window):
         fp = open(LOG_FILENAME, 'a')
         fp.write('%s,%s,%s\n' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), self.name, 'LightBurn'))
         fp.close()
-        os.execvp('zenity', ['zenity', '--info', '--text=dummy lightburn'])
+        Gio.DesktopAppInfo.new_from_filename(os.path.expanduser('~/Desktop/LightBurn.desktop')).launch()
 
     def on_select(self, widget):
         sel = widget.get_selected()
