@@ -114,7 +114,7 @@ class LaserLogWindow(Gtk.Window):
         #setting up the layout
         self.scrollable_treelist = Gtk.ScrolledWindow()
         self.scrollable_treelist.set_vexpand(True)
-        self.intro_label = Gtk.Label(TEXT_INTRO)
+        self.intro_label = Gtk.Label.new(TEXT_INTRO)
         self.grid.attach(self.intro_label, 0, 0, 3, 1)
         self.grid.attach(self.search_entry, 0, 1, 3, 1)
         self.grid.attach(self.scrollable_treelist, 0, 2, 3, 1)
@@ -129,7 +129,7 @@ class LaserLogWindow(Gtk.Window):
 
     def on_not_in_list(self, widget):
         print("not in list")
-        self.not_in_list_label = Gtk.Label(TEXT_NOT_ON_LIST)
+        self.not_in_list_label = Gtk.Label.new(TEXT_NOT_ON_LIST)
         self.grid.attach(self.not_in_list_label, 0, 5, 3, 1)
         self.show_all()
 
