@@ -10,7 +10,10 @@ CACHE_FILENAME = '~/laserlog/laserlog.cache'
 CACHE_SECONDS = 600
 
 TEXT_INTRO = 'Hoi! Wie ben jij? Wij houden graag bij wie wanneer de lasercutter gebruikt.'
-TEXT_NOT_ON_LIST = '''Als je nog geen persoonlijke instructie gehad hebt, is het niet de bedoeling dat je de lasercutter gebruikt.
+TEXT_NOT_ON_LIST_TITLE = 'Stop!'
+TEXT_NOT_ON_LIST_TEXT = '''Als je nog geen persoonlijke instructie gehad hebt,
+is het niet de bedoeling dat je de lasercutter gebruikt.
+
 Vraag iemand die wel op de lijst staat of hij/zij jou instructie wilt geven.'''
 
 def check_path(path):
@@ -129,9 +132,10 @@ class LaserLogWindow(Gtk.Window):
 
     def on_not_in_list(self, widget):
         print("not in list")
-        self.not_in_list_label = Gtk.Label.new(TEXT_NOT_ON_LIST)
-        self.grid.attach(self.not_in_list_label, 0, 5, 3, 1)
-        self.show_all()
+        dialog = Gtk.MessageDialog(parent = self, message_type = Gtk.MessageType.ERROR, buttons = Gtk.ButtonsType.OK, text = TEXT_NOT_ON_LIST_TITLE)
+        dialog.format_secondary_text(TEXT_NOT_ON_LIST_TEXT)
+        dialog.run()
+        dialog.destroy()
 
     def on_not_lasercutting(self, widget):
         print("not lasercutting")
