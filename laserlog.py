@@ -91,6 +91,7 @@ class LaserLogWindow(Gtk.Window):
         for i, column_title in enumerate(["Naam"]):
             renderer = Gtk.CellRendererText()
             column = Gtk.TreeViewColumn(column_title, renderer, text=i)
+            column.set_sort_column_id(i)
             self.treeview.append_column(column)
 
         # creating buttons
