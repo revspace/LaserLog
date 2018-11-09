@@ -112,25 +112,23 @@ class LaserLogWindow(Gtk.Window):
 
         self.start_laserweb = Gtk.Button.new_with_mnemonic("Start Laser_Web")
         self.start_laserweb.connect("clicked", self.on_start_laserweb)
-        self.start_laserweb.set_sensitive(False)
 
         self.start_lightburn = Gtk.Button.new_with_mnemonic("Start Light_Burn")
         self.start_lightburn.connect("clicked", self.on_start_lightburn)
-        self.start_lightburn.set_sensitive(False)
 
         #setting up the layout
         self.scrollable_treelist = Gtk.ScrolledWindow()
         self.scrollable_treelist.set_vexpand(True)
         self.intro_label = Gtk.Label.new(TEXT_INTRO)
-        self.grid.attach(self.intro_label, 0, 0, 3, 1)
-        self.grid.attach(self.search_entry, 0, 1, 3, 1)
-        self.grid.attach(self.scrollable_treelist, 0, 2, 3, 1)
+        self.grid.attach(self.intro_label, 0, 0, 4, 1)
+        self.grid.attach(self.search_entry, 0, 1, 4, 1)
+        self.grid.attach(self.scrollable_treelist, 0, 2, 4, 1)
         self.grid.attach(self.not_in_list, 0, 3, 1, 1)
         self.grid.attach(self.not_lasercutting, 0, 4, 1, 1)
-        self.grid.attach(self.start_laserweb, 1, 3, 1, 1)
-        self.grid.attach(self.start_lightburn, 1, 4, 1, 1)
-        self.grid.attach(self.open_wiki, 2, 3, 1, 1)
-        self.grid.attach(self.view_log, 2, 4, 1, 1)
+        self.grid.attach(self.open_wiki, 1, 3, 1, 1)
+        self.grid.attach(self.view_log, 1, 4, 1, 1)
+        self.grid.attach(self.start_laserweb, 3, 3, 1, 1)
+        self.grid.attach(self.start_lightburn, 3, 4, 1, 1)
         self.scrollable_treelist.add(self.treeview)
 
 
@@ -171,15 +169,8 @@ class LaserLogWindow(Gtk.Window):
 
     def on_select(self, widget):
         sel = widget.get_selected()
-        self.start_laserweb.set_sensitive(False)
-        self.start_lightburn.set_sensitive(False)
         if sel[1] is not None:
             self.name = sel[0].get_value(sel[1], 0)
-            prog = sel[0].get_value(sel[1], 2).lower()
-            if "laserweb" in prog:
-                self.start_laserweb.set_sensitive(True)
-            if "lightburn" in prog:
-                self.start_lightburn.set_sensitive(True)
 
 LOG_FILENAME = check_path(LOG_FILENAME)
 CACHE_FILENAME = check_path(CACHE_FILENAME)
