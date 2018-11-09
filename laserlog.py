@@ -7,7 +7,6 @@ from gi.repository import Gtk, Gio
 
 LOG_FILENAME = '~/laserlog/laserlog.log'
 CACHE_FILENAME = '~/laserlog/laserlog.cache'
-CACHE_SECONDS = 600
 
 TEXT_INTRO = 'Hoi! Wie ben jij? Wij houden graag bij wie wanneer de lasercutter gebruikt.'
 TEXT_NOT_ON_LIST_TITLE = 'Stop!'
@@ -43,42 +42,20 @@ def check_path(path):
     return t
 
 def get_names_from_wiki():
-    download = False
     try:
-        mtime = os.path.getmtime(CACHE_FILENAME)
-        now = datetime.datetime.now().timestamp()
-        print('%s is %d seconds old' % (CACHE_FILENAME, now - mtime))
-        if (now - mtime) > CACHE_SECONDS:
-            print('this is more than %d seconds' % (CACHE_SECONDS))
-            download = True
-    except FileNotFoundError:
-        print('%s does not exist' % (CACHE_FILENAME))
-        download = True
-
-    if not download:
+        print('downloading new list')
+        r = requests.get('https://revspace.nl/api.php?action=query&prop=revisions&rvprop=content&format=json&formatversion=2&redirects&titles=Lasercutter')
+        content = r.json()['query']['pages'][0]['revisions'][0]['content']
+        table = re.search(r'= Bevoegde Operators =.+?\}', content, re.S).group(0)
+        names = re.findall(r'\|-\n\| ([^|]+) \|\| ([^|]+) \|\| ([^|]+)\n', table)
+        json.dump(names, open(CACHE_FILENAME, 'w'))
+    except:
+        print('download failed. attempting cache')
         try:
             names = json.load(open(CACHE_FILENAME))
-        except json.decoder.JSONDecodeError:
-            print('%s JSON invalid' % (CACHE_FILENAME))
-            download = True
-
-    if download:
-        print('downloading new %s' % (CACHE_FILENAME))
-
-        try:
-            r = requests.get('https://revspace.nl/api.php?action=query&prop=revisions&rvprop=content&format=json&formatversion=2&redirects&titles=Lasercutter')
-            content = r.json()['query']['pages'][0]['revisions'][0]['content']
-            table = re.search(r'= Bevoegde Operators =.+?\}', content, re.S).group(0)
-            names = re.findall(r'\|-\n\| ([^|]+) \|\| ([^|]+) \|\| ([^|]+)\n', table)
-            json.dump(names, open(CACHE_FILENAME, 'w'))
         except:
-            print('download failed. attempting cache (again)')
-            try:
-                names = json.load(open(CACHE_FILENAME))
-            except:
-                print('%s JSON invalid! we\'re done for today' % (CACHE_FILENAME))
-                sys.exit(42)
-
+            print('%s JSON invalid! we\'re done for today' % (CACHE_FILENAME))
+            sys.exit(42)
 
     return names
 
