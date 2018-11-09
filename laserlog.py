@@ -137,9 +137,11 @@ class LaserLogWindow(Gtk.Window):
 
         self.start_laserweb = Gtk.Button.new_with_mnemonic("Start Laser_Web")
         self.start_laserweb.connect("clicked", self.on_start_laserweb)
+        self.start_laserweb.set_sensitive(False)
 
         self.start_lightburn = Gtk.Button.new_with_mnemonic("Start Light_Burn")
         self.start_lightburn.connect("clicked", self.on_start_lightburn)
+        self.start_lightburn.set_sensitive(False)
 
         #setting up the layout
         self.scrollable_treelist = Gtk.ScrolledWindow()
@@ -185,13 +187,15 @@ class LaserLogWindow(Gtk.Window):
     def on_select(self, widget):
         global name
         sel = widget.get_selected()
+        self.start_laserweb.set_sensitive(False)
+        self.start_lightburn.set_sensitive(False)
         if sel[1] is not None:
+            self.start_laserweb.set_sensitive(True)
+            self.start_lightburn.set_sensitive(True)
             name = sel[0].get_value(sel[1], 0)
 
 LOG_FILENAME = check_path(LOG_FILENAME)
 CACHE_FILENAME = check_path(CACHE_FILENAME)
-
-name = 'N/A'
 
 win = LaserLogWindow()
 win.connect("destroy", Gtk.main_quit)
