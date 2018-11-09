@@ -23,7 +23,7 @@ def run(prog):
     print('Starting %s' % (prog))
     log('%s,%s,%s' % (name, prog, 'start'))
 
-    p = subprocess.Popen(['./start-%s' % (prog)])
+    p = subprocess.Popen([check_path('~/laserlog/start-%s' % (prog))])
     while p.poll() is None:
         time.sleep(0.1)
         while Gtk.events_pending():
