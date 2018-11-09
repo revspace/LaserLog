@@ -155,17 +155,25 @@ class LaserLogWindow(Gtk.Window):
         print("Starting LaserWeb")
         Gtk.main_quit()
         fp = open(LOG_FILENAME, 'a')
-        fp.write('%s,%s,%s\n' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), self.name, 'LaserWeb'))
+        fp.write('%s,%s,%s,%s\n' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), self.name, 'LaserWeb', 'start'))
         fp.close()
         Gio.DesktopAppInfo.new_from_filename(os.path.expanduser('~/Desktop/LaserWeb.desktop')).launch()
+        fp = open(LOG_FILENAME, 'a')
+        fp.write('%s,%s,%s,%s\n' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), self.name, 'LaserWeb', 'done'))
+        fp.close()
+        Gtk.main()
 
     def on_start_lightburn(self, widget):
         print("Starting LightBurn")
         Gtk.main_quit()
         fp = open(LOG_FILENAME, 'a')
-        fp.write('%s,%s,%s\n' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), self.name, 'LightBurn'))
+        fp.write('%s,%s,%s,%s\n' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), self.name, 'LightBurn', 'start'))
         fp.close()
         os.execvp(os.path.expanduser('~/LightBurn/start-lightburn'), ['start-lightburn'])
+        fp = open(LOG_FILENAME, 'a')
+        fp.write('%s,%s,%s,%s\n' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), self.name, 'LightBurn', 'done'))
+        fp.close()
+        Gtk.main()
 
     def on_select(self, widget):
         sel = widget.get_selected()
