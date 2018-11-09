@@ -88,7 +88,7 @@ class LaserLogWindow(Gtk.Window):
         self.treeview = Gtk.TreeView.new_with_model(self.names_store)
         self.treeview.set_search_entry(self.search_entry)
         self.treeview.get_selection().connect("changed", self.on_select)
-        for i, column_title in enumerate(["Naam", "Geïnstrueerd door", "Ervaring met software"]):
+        for i, column_title in enumerate(["Naam"]):
             renderer = Gtk.CellRendererText()
             column = Gtk.TreeViewColumn(column_title, renderer, text=i)
             self.treeview.append_column(column)
