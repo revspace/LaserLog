@@ -85,7 +85,10 @@ class LaserLogWindow(Gtk.Window):
             self.names_store.append(list(software_ref))
 
         # creating the treeview, making it use the filter as a model, and adding the columns
-        self.treeview = Gtk.TreeView.new_with_model(self.names_store)
+        # sorting stolen from https://stackoverflow.com/a/19063670/1317735
+        self.sorted_model = Gtk.TreeModelSort(model=self.names_store)
+        self.sorted_model.set_sort_column_id(0, Gtk.SortType.ASCENDING)
+        self.treeview = Gtk.TreeView(model=self.sorted_model)
         self.treeview.set_search_entry(self.search_entry)
         self.treeview.get_selection().connect("changed", self.on_select)
         for i, column_title in enumerate(["Naam"]):
