@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sh -c "/home/revspace/lw.comm-server/dist/lw.comm-server-4.0.127-x86_64.AppImage" %U
