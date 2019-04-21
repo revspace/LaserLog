@@ -63,6 +63,7 @@ def log(text):
     fp = open(LOG_FILENAME, 'a')
     fp.write('%s,%s\n' % (datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'), text))
     fp.close()
+    os.sync()
 
 class LaserLogWindow(Gtk.Window):
     def __init__(self):
