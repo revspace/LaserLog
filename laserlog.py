@@ -49,11 +49,13 @@ def get_names_from_wiki():
         table = re.search(r'= Bevoegde Operators =.+?\}', content, re.S).group(0)
         names = re.findall(r'\|-\n\| ([^|]+) \|\| ([^|]+) \|\| ([^|]+)\n', table)
         json.dump(names, open(CACHE_FILENAME, 'w'))
-    except:
+    except Exception as e:
+        print(e)
         print('download failed. attempting cache')
         try:
             names = json.load(open(CACHE_FILENAME))
-        except:
+        except Exception as e:
+            print(e)
             print('%s JSON invalid! we\'re done for today' % (CACHE_FILENAME))
             sys.exit(42)
 
