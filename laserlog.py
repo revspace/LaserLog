@@ -13,7 +13,7 @@ TEXT_NOT_ON_LIST_TITLE = 'Stop!'
 TEXT_NOT_ON_LIST_TEXT = '''Als je nog geen persoonlijke instructie gehad hebt,
 is het niet de bedoeling dat je de lasercutter gebruikt.
 
-Vraag iemand die wel op de lijst staat of hij/zij jou instructie wilt geven.'''
+Vraag iemand die wel op de lijst staat of die jou instructie wilt geven.'''
 
 def run(prog):
     global win
