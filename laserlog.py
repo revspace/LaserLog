@@ -44,8 +44,8 @@ def check_path(path):
 def get_names_from_wiki():
     try:
         print('downloading new list')
-        r = requests.get('https://revspace.nl/api.php?action=query&prop=revisions&rvprop=content&format=json&formatversion=2&redirects&titles=Lasercutter')
-        content = r.json()['query']['pages'][0]['revisions'][0]['content']
+        r = requests.get('https://revspace.nl/api.php?action=query&prop=revisions&rvprop=content&rvslots=main&format=json&formatversion=2&redirects&titles=Lasercutter')
+        content = r.json()['query']['pages'][0]['revisions'][0]['slots']['main']['content']
         table = re.search(r'= Bevoegde Operators =.+?\}', content, re.S).group(0)
         names = re.findall(r'\|-\n\| ([^|]+) \|\| ([^|]+) \|\| ([^|]+)\n', table)
         json.dump(names, open(CACHE_FILENAME, 'w'))
